@@ -128,3 +128,110 @@ lightbox.addEventListener("click", (e) => {
   if (item.type === "video") tile.classList.add("tile--tall");
   grid.append(tile);
 });
+
+// Loyalty punch card: punch four holes, flip the fifth to "Free", stamp it
+const loyalty = document.querySelector(".loyalty");
+const holes = [...loyalty.querySelectorAll(".punch__hole")];
+const punchCount = loyalty.querySelector(".punch__count");
+let punchTimers = [];
+
+function resetCard() {
+  punchTimers.forEach(clearTimeout);
+  punchTimers = [];
+  holes.forEach((h) => h.classList.remove("is-punched", "is-free"));
+  loyalty.classList.remove("is-done", "is-shake");
+  punchCount.textContent = "Visit 0 of 5";
+}
+
+function finishCard() {
+  holes.slice(0, 4).forEach((h) => h.classList.add("is-punched"));
+  holes[4].classList.add("is-free");
+  loyalty.classList.add("is-done");
+  punchCount.textContent = "Visit 5 of 5";
+}
+
+function playCard() {
+  resetCard();
+  const at = (ms, fn) => punchTimers.push(setTimeout(fn, ms));
+  holes.slice(0, 4).forEach((hole, i) =>
+    at(300 + i * 420, () => {
+      hole.classList.add("is-punched");
+      punchCount.textContent = `Visit ${i + 1} of 5`;
+    })
+  );
+  at(2150, () => {
+    holes[4].classList.add("is-free");
+    punchCount.textContent = "Visit 5 of 5";
+  });
+  at(2750, () => loyalty.classList.add("is-done", "is-shake"));
+}
+
+if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  finishCard();
+} else {
+  let played = false;
+  new IntersectionObserver(
+    ([entry]) => {
+      if (entry.intersectionRatio >= 0.6 && !played) {
+        played = true;
+        playCard();
+      } else if (!entry.isIntersecting) {
+        played = false; // replay next time it scrolls into view
+      }
+    },
+    { threshold: [0, 0.6] }
+  ).observe(loyalty);
+  loyalty.querySelector(".punch").addEventListener("click", playCard);
+}
+
+// Parallax
+if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  const hero = document.querySelector(".hero");
+  const heroX = [...document.querySelectorAll("[data-px]")];
+  const heroY = [...document.querySelectorAll("[data-py]")];
+  const bandRows = [...document.querySelectorAll("[data-band]")];
+  const band = document.querySelector(".band");
+  const tiles = [...document.querySelectorAll(".tile")];
+
+  let ticking = false;
+  function update() {
+    ticking = false;
+    const vh = window.innerHeight;
+    const y = window.scrollY;
+
+    // Hero: lines slide sideways, monogram drifts up, both stop once the hero is gone
+    if (y < hero.offsetHeight) {
+      heroX.forEach((el) => (el.style.transform = `translate3d(${y * el.dataset.px}px,0,0)`));
+      heroY.forEach((el) => (el.style.transform = `translate3d(0,${y * el.dataset.py}px,0)`));
+    }
+
+    // Band: rows travel in opposite directions while the band is on screen
+    const b = band.getBoundingClientRect();
+    if (b.bottom > 0 && b.top < vh) {
+      const scrolled = (vh - b.top) * 0.45; // px the band has scrolled into view, scaled
+      bandRows.forEach((row) => {
+        const start = row.scrollWidth / 3; // rows repeat their words, so start mid-row
+        const dir = Number(row.dataset.band);
+        row.style.transform = `translate3d(${-start + dir * scrolled}px,0,0)`;
+      });
+    }
+
+    // Gallery: media shifts inside its frame
+    tiles.forEach((tile) => {
+      const r = tile.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > vh) return;
+      const offset = (r.top + r.height / 2 - vh / 2) / vh; // -1 → 1
+      tile.style.setProperty("--shift", `${(-offset * r.height * 0.08).toFixed(1)}px`);
+    });
+  }
+
+  function onScroll() {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll);
+  update();
+}

@@ -60,11 +60,11 @@
     <section class="hero">
       <div class="wrap">
         <h1 class="hero__title">
-          <span class="line"><span>Confidence</span></span>
-          <span class="line"><span>starts</span></span>
-          <span class="line"><span>here.</span></span>
+          <span class="line" data-px="-0.22"><span>Confidence</span></span>
+          <span class="line" data-px="0.16"><span>starts</span></span>
+          <span class="line" data-px="-0.1"><span>here.</span></span>
         </h1>
-        <img class="hero__mark" src="assets/logo.jpg" alt="Anshu Blends AB monogram with scissors" width="690" height="600">
+        <img class="hero__mark" data-py="-0.35" src="assets/logo.jpg" alt="Anshu Blends AB monogram with scissors" width="690" height="600">
         <div class="hero__body">
           <p class="hero__lead">Crafted for your style.</p>
           <p class="hero__text">AnshuBlends is all about clean cuts, sharp fades, and helping you look your best.</p>
@@ -151,6 +151,19 @@
       </div>
     </section>
 
+    <!-- Scrolling text band -->
+    <div class="band" aria-hidden="true">
+      <div class="band__row" data-band="-1">
+        <span>Clean cuts</span><img src="assets/logo.jpg" alt=""><span class="outline">Sharp fades</span><img src="assets/logo.jpg" alt="">
+        <span>Clean cuts</span><img src="assets/logo.jpg" alt=""><span class="outline">Sharp fades</span><img src="assets/logo.jpg" alt="">
+        <span>Clean cuts</span><img src="assets/logo.jpg" alt=""><span class="outline">Sharp fades</span><img src="assets/logo.jpg" alt="">
+      </div>
+      <div class="band__row" data-band="1">
+        <span class="outline">Tapers</span><img src="assets/logo.jpg" alt=""><span>Burst fades</span><img src="assets/logo.jpg" alt=""><span class="outline">Beards</span><img src="assets/logo.jpg" alt=""><span>Line-ups</span><img src="assets/logo.jpg" alt="">
+        <span class="outline">Tapers</span><img src="assets/logo.jpg" alt=""><span>Burst fades</span><img src="assets/logo.jpg" alt=""><span class="outline">Beards</span><img src="assets/logo.jpg" alt=""><span>Line-ups</span><img src="assets/logo.jpg" alt="">
+      </div>
+    </div>
+
     <!-- Gallery -->
     <section class="section section--dark" id="gallery">
       <div class="wrap">
@@ -180,7 +193,15 @@
             <h3>Loyalty rewards</h3>
             <p>Your fifth haircut is free. Ask for a card at your next visit.</p>
             <div class="punch" aria-hidden="true">
-              <span></span><span></span><span></span><span></span><span class="punch__free">Free</span>
+              <span class="punch__hole">1</span>
+              <span class="punch__hole">2</span>
+              <span class="punch__hole">3</span>
+              <span class="punch__hole">4</span>
+              <span class="punch__hole punch__hole--free"><span class="punch__num">5</span><span class="punch__word">Free</span></span>
+            </div>
+            <div class="punch__status" aria-hidden="true">
+              <span class="punch__count">Visit 0 of 5</span>
+              <span class="stamp">Free haircut!</span>
             </div>
           </div>
         </div>
