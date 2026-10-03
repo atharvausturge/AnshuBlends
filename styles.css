@@ -222,7 +222,7 @@ h1, h2, h3, h4, p, dl, dd { margin: 0; }
 }
 .tile--tall { grid-row: span 2; }
 .tile img, .tile video {
-  position: absolute; left: 0; top: -10%; width: 100%; height: 120%; object-fit: cover;
+  position: absolute; left: 0; top: -10%; width: 100%; height: 120%; object-fit: cover; object-position: center 35%;
   transform: translateY(var(--shift, 0px)); will-change: transform;
 }
 .tile:hover img, .tile:hover video { transform: translateY(var(--shift, 0px)) scale(1.03); transition: transform .5s; }

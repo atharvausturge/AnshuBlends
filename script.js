@@ -70,7 +70,7 @@ function openLightbox(item) {
   } else {
     media = document.createElement("img");
     media.src = item.src;
-    media.alt = item.caption || "Haircut by Anshu Blends";
+    media.alt = item.alt || item.caption || "Haircut by Anshu Blends";
   }
   lightboxMedia.append(media);
   if (item.caption) {
@@ -113,8 +113,9 @@ lightbox.addEventListener("click", (e) => {
     } else {
       const img = document.createElement("img");
       img.src = item.src;
-      img.alt = item.caption || "Haircut by Anshu Blends";
+      img.alt = item.alt || item.caption || "Haircut by Anshu Blends";
       img.loading = "lazy";
+      if (item.focus) img.style.objectPosition = item.focus;
       tile.append(img);
     }
     if (item.caption) {
