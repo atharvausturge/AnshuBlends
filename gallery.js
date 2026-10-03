@@ -16,7 +16,7 @@
 */
 window.GALLERY = [
   { type: "video", src: "assets/gallery/clip-1.mp4", poster: "assets/gallery/clip-1.jpg", caption: "", alt: "Short clip of a fresh cut" },
-  { type: "photo", src: "assets/gallery/cut-1.jpg", caption: "", alt: "Side view of a textured crop with a fade" },
+  { type: "photo", src: "assets/gallery/cut-1.jpg", caption: "", alt: "Side view of a textured crop with a fade", focus: "center 50%" },
   { type: "photo", src: "assets/gallery/cut-2.jpg", caption: "", alt: "Side view of curly hair with a taper" },
   { type: "photo", src: "assets/gallery/cut-3.jpg", caption: "", alt: "Curly top with a taper, side view" },
   { type: "photo", src: "assets/gallery/cut-4.jpg", caption: "", alt: "Back view of a curly top with a low taper" },
